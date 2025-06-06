@@ -45,7 +45,10 @@ n_envs | n_steps | batch_size | n_epochs | gae_lambda | ent_coef | total_timeste
 <br/>
 
 ## Results
-After training each algorithm, I evaluated the results for 10 episodes by creating an identical `Lunar-Lander-v2` environment. Here are the mean and standard deviation for all rewards of each model:
+A score of 200+ is considered acceptable for Lunar Lander, in other words: successful landing. After training each algorithm, I evaluated the results for 10 episodes by creating an identical `Lunar-Lander-v2` environment. Here are the mean and standard deviation for all rewards of each model:
 - **PPO**
 - **DQN**
 - **A2C**
+
+## Discussions
+In case of LunarLander environment, PPO algorithm significantly outperformed other algorithms. PPO's biggest advantage is that it improves our agent's training stability by avoiding too large policy updates. Further experimentation is required to cross-referance environments. A later study can be conducted on an Atari environment like Pac-Man.
