@@ -22,19 +22,30 @@ In this study, I tried to find the optimal policy for `LunarLander-v2` : a class
 - its angle, its angular velocity
 - two booleans that represent whether each leg is in contact with the ground or not
 
-I tried three Deep-RL algorithms defined in `Stable-Baselines3`, the deep RL library:
-1) **Proximal Policy Optimization (PPO):**
-2) **Deep Q Network (DQN)**
-3) xxx
+There are only a number of algorithms can be used for the **Lunar Lander** problem, because of it's action and observation space. I tried three Deep-RL algorithms defined in `Stable-Baselines3`, the deep RL library:
+1) **[Proximal Policy Optimization (PPO)](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html)**
+2) **[Deep Q Network (DQN)](https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html#)**
+3) **[Advantage Actor-Critic (A2C)](https://stable-baselines3.readthedocs.io/en/master/modules/a2c.html)**
 
 <br/>
 
 ## Methods
-I trained all three algorithms for a minimum of 1 million timesteps. For `Lunar Lander`, action space is a 8-dimensional vector so our input to the algorithms is a vector. Thus, I used Multi Layer Perceptron Policy (`MlpPolicy`) for all three of them. Final fixed hyperparameter is the gamma being *0.999*, which makes the cumulative reward fairly undiscounted. Here is why: our task is to safely land the Lunar Lander, which means out agents should care about the long-term reward. Below are the other hyperparameters for each algorithm: 
+I trained all three algorithms for a minimum of 1 million timesteps. I choose a threshold of *200* to make my algorithm be on-par with human achieved scores. Until the models reached the threshold, I incremented the total timesteps by 500_000.
+For **Lunar Lander**, action space is a 8-dimensional vector so our input to the algorithms is a vector. Thus, I used Multi Layer Perceptron Policy (`MlpPolicy`) for all three of them. Final fixed hyperparameter is the gamma being *0.999*, which makes the cumulative reward fairly undiscounted. Here is why: our task is to safely land the Lunar Lander, which means out agents should care about the long-term reward. Below are the other non-default hyperparameters for each algorithm (the default hyperparameters can be found from the links above): 
 
 **PPO** <br/>
 n_envs | n_steps | batch_size | n_epochs | gae_lambda | ent_coef | total_timesteps
 --- | --- | --- | --- | --- | --- | --- 
 8 | 1024 | 32 | 5 | 0.98 | 0.01 | 1000000
 
-**DQN**
+**DQN** <br/>
+
+**A2C**
+
+<br/>
+
+## Results
+After training each algorithm, I evaluated the results for 10 episodes by creating an identical `Lunar-Lander-v2` environment. Here are the mean and standard deviation for all rewards of each model:
+- **PPO**
+- **DQN**
+- **A2C**
