@@ -34,21 +34,29 @@ I trained all three algorithms for a minimum of 1 million timesteps. I choose a 
 For **Lunar Lander**, action space is a 8-dimensional vector so our input to the algorithms is a vector. Thus, I used Multi Layer Perceptron Policy (`MlpPolicy`) for all three of them. Final fixed hyperparameter is the gamma being *0.999*, which makes the cumulative reward fairly undiscounted. Here is why: our task is to safely land the Lunar Lander, which means out agents should care about the long-term reward. Below are the other non-default hyperparameters for each algorithm (the default hyperparameters can be found from the links above): 
 
 **PPO** <br/>
-n_envs | n_steps | batch_size | n_epochs | gae_lambda | ent_coef | total_timesteps
---- | --- | --- | --- | --- | --- | --- 
-8 | 1024 | 32 | 5 | 0.98 | 0.01 | 1000000
+n_envs | n_steps | batch_size | n_epochs | gae_lambda | ent_coef 
+--- | --- | --- | --- | --- | --- 
+8 | 1024 | 32 | 5 | 0.98 | 0.01 
 
 **DQN** <br/>
+batch_size | learning_rate | learning_starts | buffer_size | exploration_final_eps | exploration_fraction | policy_kwargs
+--- | --- | --- | --- | --- | --- | ---
+128 | 3e-4 | 1_000 | 200_000 | 0.1 | 0.3 | net_arch=[256, 256]
 
-**A2C**
+**A2C** <br/>
+gae_lambda | n_steps | ent_coef | vf_coef | max_grad_norm | policy_kwargs
+--- | --- | --- | --- | --- | ---
+0.95 | 16 | 0.05 | 0.25 | 0.5 | net_arch=[256, 256]
 
 <br/>
 
 ## Results
 A score of 200+ is considered acceptable for Lunar Lander, in other words: successful landing. After training each algorithm, I evaluated the results for 10 episodes by creating an identical `Lunar-Lander-v2` environment. Here are the mean and standard deviation for all rewards of each model:
-- **PPO**
-- **DQN**
-- **A2C**
+- **PPO** -> 267.12 +/- 20.190092729862148
+- **DQN** -> 276.12 +/- 12.400879722973757
+- **A2C** -> 59.95 +/- 123.98633475169582
 
 ## Discussions
-In case of LunarLander environment, PPO algorithm significantly outperformed other algorithms. PPO's biggest advantage is that it improves our agent's training stability by avoiding too large policy updates. Further experimentation is required to cross-referance environments. A later study can be conducted on an Atari environment like Pac-Man.
+In case of LunarLander environment, PPO and DQN algorithms yielded similar results and outperformed the A2C algorithm. PPO's biggest advantage is that it improves our agent's training stability by avoiding too large policy updates. It should be noted that PPO yielded the 2nd highest reward without policy optimization (increasing the number of neural nets). When the neural net architecture was not altered, both DQN and A2C scored sub-zero rewards (near -150).
+Further experimentation is required to cross-referance environments and hyperparameters. 
+A later study can be conducted on an Atari environment like Pac-Man, or we can increase the number of models.
